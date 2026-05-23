@@ -15,6 +15,13 @@
 
 .normal-body {
     background: linear-gradient(135deg, #0f2027, #172a33);
+    margin: 0;
+    position: relative;
+}
+
+.nav-bar {
+    color: black;
+    opacity: 80%;
 }
 
 .heading {
