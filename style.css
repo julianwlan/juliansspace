@@ -19,9 +19,27 @@
     position: relative;
 }
 
+.legal-body {
+    margin: 1rem;
+    position: relative;
+}
+
 .nav-bar {
-    color: black;
-    opacity: 80%;
+    background-color: black;
+    height: 4vh; 
+    font-size: 2vh;
+    margin: 2vw;
+    border-radius: 2vw;
+    padding: 0.5vh 10vw;
+    
+    display: flex;
+
+    flex-direction: row;
+    justify-content: space-between;
+
+    /* align-items: center; */
+
+
 }
 
 .heading {
@@ -29,6 +47,17 @@
     color: white;
     text-align: center;
     letter-spacing: 2px;
+}
+
+.heading-black {
+    margin-top: 5rem;
+    color: black;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+#grid-container {
+
 }
 
 #bg-video {
