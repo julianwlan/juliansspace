@@ -13,6 +13,10 @@
     font-variation-settings: "wdth" 100;
 }
 
+html {
+    height: 100%;
+}
+
 .normal-body {
     background: linear-gradient(135deg, #0f2027, #172a33);
     margin: 0;
@@ -56,10 +60,6 @@
     letter-spacing: 2px;
 }
 
-#grid-container {
-
-}
-
 #bg-video {
     width: 100%;
     opacity: 50%;
@@ -74,4 +74,21 @@
     object-fit: cover;
 
     z-index: -999;
+}
+
+footer {
+    /* position: fixed;
+    left: 0;
+    bottom: 0; */
+    width: 100%;
+    background: black;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 100vh;
+}
+
+a {
+    color: white;
+    text-decoration: none;
 }
