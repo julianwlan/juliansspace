@@ -57,7 +57,7 @@ const showWeather = async () => {
     const month = date.getMonth();
 
     const temp = document.querySelector('#curr-temp');
-    temp.innerHTML = `${weather.current.temp_c} °C feels like ${weather.current.feelslike_c} °C`;
+    temp.innerHTML = `${weather.current.temp_c} °C <br> feels like ${weather.current.feelslike_c} °C`;
 
     const condi = document.querySelector('#curr-condition');
     condi.src = weather.current.condition.icon;
@@ -82,8 +82,16 @@ const showWeather = async () => {
     }
 
     const forecast = document.querySelector('#forecast');
+    Array.from(forecast.children).forEach((day, i) => {
+        day.innerHTML = `
+            <div>${weather.forecast.forecastday[i].day.mintemp_c} °C - ${weather.forecast.forecastday[i].day.maxtemp_c} °C</div>
+            <img src="${weather.forecast.forecastday[i].day.condition.icon}" alt="${weather.forecast.forecastday[i].day.condition.text}">
+            <div>${weather.forecast.forecastday[i].day.daily_chance_of_rain} % Rain</div>
+        `;
+    });
 
     //TODO: do the forecast
+    
 
     console.log(weather);
     console.log(city);
