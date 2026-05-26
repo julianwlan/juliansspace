@@ -36,7 +36,7 @@ const getWeather = async () => {
                     `https://api.weatherapi.com/v1/forecast.json?days=4&key=ff76f32b6d9940a9b2674941262005&lang=en&q=${position.lati},${position.longi}`
                 );
 
-                const weather = response.json();
+                const weather = await response.json();
                 resolve(weather);
             } catch (err) {
                 reject(err);
@@ -50,8 +50,11 @@ const showWeather = async () => {
     const weather = await getWeather();
 
     const temp = document.querySelector('#curr-temp');
-    temp.src = weather.current.condition.icon;
-    
+    temp.innerHTML = weather.current.temp_c;
+
+    const condi = document.querySelector('#curr-condition');
+    condi.src = weather.current.condition.icon;
+
 
     console.log(weather);
     console.log(city);
