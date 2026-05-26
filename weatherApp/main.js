@@ -1,6 +1,5 @@
 const getCity = () => {
     return new Promise((resolve, reject) => {
-
         navigator.geolocation.getCurrentPosition(async (pos) => {
             try {
                 const position = {
@@ -24,9 +23,35 @@ const getCity = () => {
     });
 };
 
-const run = async () => {
+const getWeather = async () => {
+    return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(async (pos) => {
+            try {
+                const position = {
+                    lati: pos.coords.latitude,
+                    longi: pos.coords.longitude
+                };
+
+                const response = await fetch(
+                    `https://api.weatherapi.com/v1/forecast.json?days=4&key=ff76f32b6d9940a9b2674941262005&lang=en&q=${position.lati},${position.longi}`
+                );
+
+                const weather = response.json();
+                resolve(weather);
+            } catch (err) {
+                reject(err);
+            }
+        }, reject);
+    });
+}
+
+const showWeather = async () => {
     const city = await getCity();
+
+    const weather = await getWeather();
+
+    console.log(weather);
     console.log(city);
 };
 
-run();
+showWeather();
