@@ -12,8 +12,8 @@ const getCity = () => {
                 );
 
                 const dataJSON = await response.json();
-                const city = dataJSON.results[0].components.city;
-                const suburb = dataJSON.results[0].components.suburb;
+                const city = dataJSON.results[0].components.city || dataJSON.results[0].components.village;
+                const suburb = dataJSON.results[0].components.suburb || "";
 
                 resolve(`${city}, ${suburb}`);
             } catch (err) {
@@ -47,8 +47,11 @@ const getWeather = async () => {
 
 const showWeather = async () => {
     const city = await getCity();
-
     const weather = await getWeather();
+
+    const temp = document.querySelector('#curr-temp');
+    temp.src = weather.current.condition.icon;
+    
 
     console.log(weather);
     console.log(city);
