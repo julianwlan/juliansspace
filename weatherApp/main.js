@@ -83,7 +83,7 @@ const showWeather = async () => {
 
     const forecast = document.querySelector('#forecast');
 
-    // do the forecast
+    //TODO: do the forecast
 
     console.log(weather);
     console.log(city);
