@@ -52,6 +52,8 @@ showButton.addEventListener("click", (e) => {
 
 const showWeather = async () => {
     const city = await getCity();
+    document.querySelector('#location').innerHTML = city;
+    
     const weather = await getWeather();
     const date = new Date();
     const month = date.getMonth();
