@@ -46,57 +46,81 @@ const getWeather = async () => {
 
 const detailed = document.querySelector('#detailed');
 const showButton = document.querySelector('#show-detailed');
+const loadingEl = document.querySelector('#loading');
+const weatherEl = document.querySelector('#weather');
+
 showButton.addEventListener("click", (e) => {
     detailed.classList.toggle('hidden');
 });
 
+let loaded = false;
+
 const showWeather = async () => {
-    const city = await getCity();
-    document.querySelector('#location').innerHTML = city;
-    
-    const weather = await getWeather();
-    const date = new Date();
-    const month = date.getMonth();
+    loadingEl.style.display = 'block';
+    weatherEl.style.display = 'none';
 
-    const temp = document.querySelector('#curr-temp');
-    temp.innerHTML = `${weather.current.temp_c} °C <br> feels like ${weather.current.feelslike_c} °C`;
+    const retryTimeout = setTimeout(() => {
+        if (!loaded) {
+            console.log('Timeout - retrying...');
+            showWeather();
+        }
+    }, 2000);
 
-    const condi = document.querySelector('#curr-condition');
-    condi.src = weather.current.condition.icon;
+    try {
+        const city = await getCity();
+        document.querySelector('#location').innerHTML = city;
+        
+        const weather = await getWeather();
+        const date = new Date();
+        const month = date.getMonth();
 
-    const isWinter = month === 11 || month === 0 || month === 1;
-    
-    if(isWinter) {
-        detailed.innerHTML = `
-        Chance of Rain: ${weather.current.chance_of_rain} % <br>
-        Chance of Snow: ${weather.current.chance_of_snow} % <br>
-        Dewpoint:       ${weather.current.dewpoint_c} °C <br>
-        Humidity:       ${weather.current.humidity} % <br>
-        UV-Index:       ${weather.current.uv}
-        `;
-    } else {
-        detailed.innerHTML = `
-        Chance of Rain: ${weather.current.chance_of_rain} % <br>
-        Dewpoint:       ${weather.current.dewpoint_c} °C <br>
-        Humidity:       ${weather.current.humidity} % <br>
-        UV-Index:       ${weather.current.uv}
-        `;
+        const temp = document.querySelector('#curr-temp');
+        temp.innerHTML = `${weather.current.temp_c} °C <br> feels like ${weather.current.feelslike_c} °C`;
+
+        const condi = document.querySelector('#curr-condition');
+        condi.src = weather.current.condition.icon;
+
+        const isWinter = month === 11 || month === 0 || month === 1;
+        
+        if(isWinter) {
+            detailed.innerHTML = `
+            Chance of Rain: ${weather.current.chance_of_rain} % <br>
+            Chance of Snow: ${weather.current.chance_of_snow} % <br>
+            Dewpoint:       ${weather.current.dewpoint_c} °C <br>
+            Humidity:       ${weather.current.humidity} % <br>
+            UV-Index:       ${weather.current.uv}
+            `;
+        } else {
+            detailed.innerHTML = `
+            Chance of Rain: ${weather.current.chance_of_rain} % <br>
+            Dewpoint:       ${weather.current.dewpoint_c} °C <br>
+            Humidity:       ${weather.current.humidity} % <br>
+            UV-Index:       ${weather.current.uv}
+            `;
+        }
+
+        const forecast = document.querySelector('#forecast');
+        Array.from(forecast.children).forEach((day, i) => {
+            day.innerHTML = `
+                <div>${weather.forecast.forecastday[i].day.mintemp_c} °C - ${weather.forecast.forecastday[i].day.maxtemp_c} °C</div>
+                <img src="${weather.forecast.forecastday[i].day.condition.icon}" alt="${weather.forecast.forecastday[i].day.condition.text}">
+                <div>${weather.forecast.forecastday[i].day.daily_chance_of_rain} % Rain</div>
+            `;
+        });
+
+        //TODO: do the forecast
+
+        loaded = true;
+        clearTimeout(retryTimeout);
+        loadingEl.style.display = 'none';
+        weatherEl.style.display = 'block';
+
+        console.log(weather);
+        console.log(city);
+    } catch (err) {
+        clearTimeout(retryTimeout);
+        console.error('Fehler beim Laden:', err);
     }
-
-    const forecast = document.querySelector('#forecast');
-    Array.from(forecast.children).forEach((day, i) => {
-        day.innerHTML = `
-            <div>${weather.forecast.forecastday[i].day.mintemp_c} °C - ${weather.forecast.forecastday[i].day.maxtemp_c} °C</div>
-            <img src="${weather.forecast.forecastday[i].day.condition.icon}" alt="${weather.forecast.forecastday[i].day.condition.text}">
-            <div>${weather.forecast.forecastday[i].day.daily_chance_of_rain} % Rain</div>
-        `;
-    });
-
-    //TODO: do the forecast
-    
-
-    console.log(weather);
-    console.log(city);
 };
 
 showWeather();
