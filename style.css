@@ -111,3 +111,18 @@ a {
 .hidden {
     display: none;
 }
+
+#show-detailed {
+    background-color: black;
+    color: white;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 2rem;
+    padding: 0.75rem 2.5rem;
+    font-size: 1rem;
+    border: none;
+}
+
+#show-detailed:hover {
+    opacity: 80%;
+}

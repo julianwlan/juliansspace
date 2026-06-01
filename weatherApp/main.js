@@ -83,7 +83,7 @@ const showWeather = async () => {
         const isWinter = month === 11 || month === 0 || month === 1;
         
         if(isWinter) {
-            detailed.innerHTML = `
+            detailed.innerHTML = `,
             Chance of Rain: ${weather.current.chance_of_rain} % <br>
             Chance of Snow: ${weather.current.chance_of_snow} % <br>
             Dewpoint:       ${weather.current.dewpoint_c} °C <br>
@@ -124,3 +124,5 @@ const showWeather = async () => {
 };
 
 showWeather();
+
+// Implement a school hour time 
