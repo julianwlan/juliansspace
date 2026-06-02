@@ -123,29 +123,44 @@ const showWeather = async () => {
         console.log(texts);
         
         switch(weather.current.condition.text) {
-            case 'Sunny':
+            case texts[0]:
                 source.src = '/videos/sunny.mp4';
                 break;
-            case 'Partly cloudy':
+            case texts[1]:
                 source.src = '/videos/partlycloudy.mp4';
                 break;
-            case 'Cloudy':
+            case texts[2]:
                 source.src = '/videos/cloudy.mp4';
                 break;
-            case 'Overcast':
+            case texts[3]:
                 source.src = '/videos/cloudy.mp4';
                 break;
-            case 'Mist':
-                source.src = '/videos/cloudy.mp4';
+            case texts[4]:
+                source.src = '/videos/foggy.mp4';
                 break;
-            case 'Patchy rain possible':
+            case texts[5]:
                 source.src = '/videos/rain.mp4'
                 break;
-            case 'Patchy snow possible':
+            case texts[6]:
                 source.src = '/videos/snowy.mp4';
                 break;
-            case 'Patchy sleet possible':
+            case texts[7]:
                 source.src = '/videos/rain.mp4';
+                break;
+            case texts[8]:
+                source.src = '/videos/rain.mp4';
+                break;
+            case texts[9]:
+                source.src = '/videos/thunderstorm.mp4';
+                break;
+            case texts[10]:
+                source.src = '/videos/snowy.mp4';
+                break;
+            case texts[11]:
+                source.src = '/videos/snowy.mp4';
+                break;
+            case texts[12]:
+                source.src = '/videos/foggy.mp4';
                 break;
         }
 
