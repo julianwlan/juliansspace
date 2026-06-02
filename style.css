@@ -26,6 +26,13 @@ html {
 .legal-body {
     margin: 1rem;
     position: relative;
+
+    font-weight: lighter;
+}
+
+.legal-body a {
+    color: black;
+    font-weight: bold;
 }
 
 .nav-bar {
@@ -62,7 +69,7 @@ html {
 
 #bg-video {
     width: 100%;
-    opacity: 50%;
+    opacity: 75%;
 
     position: fixed;
     top: 0;
@@ -86,6 +93,10 @@ footer {
     text-align: center;
     padding: 20px;
     margin-top: 100vh;
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 a {

@@ -83,7 +83,7 @@ const showWeather = async () => {
         const isWinter = month === 11 || month === 0 || month === 1;
         
         if(isWinter) {
-            detailed.innerHTML = `,
+            detailed.innerHTML = `
             Chance of Rain: ${weather.current.chance_of_rain} % <br>
             Chance of Snow: ${weather.current.chance_of_snow} % <br>
             Dewpoint:       ${weather.current.dewpoint_c} °C <br>
@@ -108,7 +108,46 @@ const showWeather = async () => {
             `;
         });
 
-        //TODO: do the forecast
+        // TODO: do the forecast
+
+        // TODO: manage the background vids
+
+        // TODO: implement weather warnings with: https://warnungen.zamg.at/wsapp/api/getWarningsForCoords?lat=47.2627&lon=11.3945&lang=de
+
+        const background = document.querySelector('#bg-video');
+        const source = document.createElement('source');
+
+        const condition_response = await fetch("https://www.weatherapi.com/docs/weather_conditions.json");
+        const conditions = await condition_response.json();
+        const texts = conditions.map(c => c.day);
+        console.log(texts);
+        
+        switch(weather.current.condition.text) {
+            case 'Sunny':
+                source.src = '/videos/sunny.mp4';
+                break;
+            case 'Partly cloudy':
+                source.src = '/videos/partlycloudy.mp4';
+                break;
+            case 'Cloudy':
+                source.src = '/videos/cloudy.mp4';
+                break;
+            case 'Overcast':
+                source.src = '/videos/cloudy.mp4';
+                break;
+            case 'Mist':
+                source.src = '/videos/cloudy.mp4';
+                break;
+            case 'Patchy rain possible':
+                source.src = '/videos/rain.mp4'
+                break;
+            case 'Patchy snow possible':
+                source.src = '/videos/snowy.mp4';
+                break;
+            case 'Patchy sleet possible':
+                source.src = '/videos/rain.mp4';
+                break;
+        }
 
         loaded = true;
         clearTimeout(retryTimeout);
