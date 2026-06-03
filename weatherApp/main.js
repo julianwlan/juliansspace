@@ -116,61 +116,90 @@ const showWeather = async () => {
 
         const background = document.querySelector('#bg-video');
         const source = document.createElement('source');
+        source.type = 'video/mp4';
 
         const condition_response = await fetch("https://www.weatherapi.com/docs/weather_conditions.json");
         const conditions = await condition_response.json();
         const texts = conditions.map(c => c.day);
-        console.log(texts);
+        // console.log(texts);
         
         switch(weather.current.condition.text) {
-            case texts[0]:
+            case texts[0]:  // Sunny
                 source.src = '/videos/sunny.mp4';
                 break;
-            case texts[1]:
+            case texts[1]:  // Partly cloudy
                 source.src = '/videos/partlycloudy.mp4';
                 break;
-            case texts[2]:
+            case texts[2]:  // Cloudy
+            case texts[3]:  // Overcast
                 source.src = '/videos/cloudy.mp4';
                 break;
-            case texts[3]:
-                source.src = '/videos/cloudy.mp4';
+            case texts[4]:  // Mist
+            case texts[12]: // Fog
+            case texts[13]: // Freezing fog
+                source.src = '/videos/fog.mp4';
                 break;
-            case texts[4]:
-                source.src = '/videos/foggy.mp4';
-                break;
-            case texts[5]:
-                source.src = '/videos/rain.mp4'
-                break;
-            case texts[6]:
-                source.src = '/videos/snowy.mp4';
-                break;
-            case texts[7]:
+            case texts[5]:  // Patchy rain possible
+            case texts[7]:  // Patchy sleet possible
+            case texts[8]:  // Patchy freezing drizzle possible
+            case texts[14]: // Patchy light drizzle
+            case texts[15]: // Light drizzle
+            case texts[16]: // Freezing drizzle
+            case texts[17]: // Heavy freezing drizzle
+            case texts[18]: // Patchy light rain
+            case texts[19]: // Light rain
+            case texts[20]: // Moderate rain at times
+            case texts[21]: // Moderate rain
+            case texts[22]: // Heavy rain at times
+            case texts[23]: // Heavy rain
+            case texts[24]: // Light freezing rain
+            case texts[25]: // Moderate or heavy freezing rain
+            case texts[26]: // Light sleet
+            case texts[27]: // Moderate or heavy sleet
+            case texts[35]: // Light rain shower
+            case texts[36]: // Moderate or heavy rain shower
+            case texts[37]: // Torrential rain shower
+            case texts[38]: // Light sleet showers
+            case texts[39]: // Moderate or heavy sleet showers
                 source.src = '/videos/rain.mp4';
                 break;
-            case texts[8]:
-                source.src = '/videos/rain.mp4';
+            case texts[6]:  // Patchy snow possible
+            case texts[10]: // Blowing snow
+            case texts[11]: // Blizzard
+            case texts[28]: // Patchy light snow
+            case texts[29]: // Light snow
+            case texts[30]: // Patchy moderate snow
+            case texts[31]: // Moderate snow
+            case texts[32]: // Patchy heavy snow
+            case texts[33]: // Heavy snow
+            case texts[34]: // Ice pellets
+            case texts[40]: // Light snow showers
+            case texts[41]: // Moderate or heavy snow showers
+            case texts[42]: // Light showers of ice pellets
+            case texts[43]: // Moderate or heavy showers of ice pellets
+                source.src = '/videos/snow.mp4';
                 break;
-            case texts[9]:
+            case texts[9]:  // Thundery outbreaks possible
+            case texts[44]: // Patchy light rain with thunder
+            case texts[45]: // Moderate or heavy rain with thunder
+            case texts[46]: // Patchy light snow with thunder
+            case texts[47]: // Moderate or heavy snow with thunder
                 source.src = '/videos/thunderstorm.mp4';
                 break;
-            case texts[10]:
-                source.src = '/videos/snowy.mp4';
-                break;
-            case texts[11]:
-                source.src = '/videos/snowy.mp4';
-                break;
-            case texts[12]:
-                source.src = '/videos/foggy.mp4';
+            default:
+                source.src = '/videos/sunny.mp4';
                 break;
         }
+
+        background.appendChild(source);
 
         loaded = true;
         clearTimeout(retryTimeout);
         loadingEl.style.display = 'none';
         weatherEl.style.display = 'block';
 
-        console.log(weather);
-        console.log(city);
+        // console.log(weather);
+        // console.log(city);
     } catch (err) {
         clearTimeout(retryTimeout);
         console.error('Fehler beim Laden:', err);
