@@ -136,4 +136,32 @@ a {
 
 #show-detailed:hover {
     opacity: 80%;
+    cursor: pointer;
+}
+
+sup {
+    color: rgba(0, 0, 0, 0.68);
+}
+
+#forecast {
+    margin-top: 0.5rem;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 3rem;
+    align-items: center;
+}
+
+.fc-day {
+    border: 2px solid black;
+    border-radius: 1rem;
+    padding: 1rem;
+    background-color: grey;
+    opacity: 80%;
+}
+
+.fc-day:hover {
+    opacity: 50%;
+    cursor: pointer;
 }

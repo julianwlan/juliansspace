@@ -75,7 +75,7 @@ const showWeather = async () => {
         const month = date.getMonth();
 
         const temp = document.querySelector('#curr-temp');
-        temp.innerHTML = `${weather.current.temp_c} °C <br> feels like ${weather.current.feelslike_c} °C`;
+        temp.innerHTML = `${weather.current.temp_c}<sup>°C</sup> <br> feels like ${weather.current.feelslike_c}<sup>°C</sup>`;
 
         const condi = document.querySelector('#curr-condition');
         condi.src = weather.current.condition.icon;
@@ -86,14 +86,14 @@ const showWeather = async () => {
             detailed.innerHTML = `
             Chance of Rain: ${weather.current.chance_of_rain} % <br>
             Chance of Snow: ${weather.current.chance_of_snow} % <br>
-            Dewpoint:       ${weather.current.dewpoint_c} °C <br>
+            Dewpoint:       ${weather.current.dewpoint_c}<sup>°C</sup> <br>
             Humidity:       ${weather.current.humidity} % <br>
             UV-Index:       ${weather.current.uv}
             `;
         } else {
             detailed.innerHTML = `
             Chance of Rain: ${weather.current.chance_of_rain} % <br>
-            Dewpoint:       ${weather.current.dewpoint_c} °C <br>
+            Dewpoint:       ${weather.current.dewpoint_c}<sup>°C</sup> <br>
             Humidity:       ${weather.current.humidity} % <br>
             UV-Index:       ${weather.current.uv}
             `;
@@ -102,15 +102,13 @@ const showWeather = async () => {
         const forecast = document.querySelector('#forecast');
         Array.from(forecast.children).forEach((day, i) => {
             day.innerHTML = `
-                <div>${weather.forecast.forecastday[i].day.mintemp_c} °C - ${weather.forecast.forecastday[i].day.maxtemp_c} °C</div>
+                <div>${weather.forecast.forecastday[i].day.mintemp_c}<sup>°C</sup> - ${weather.forecast.forecastday[i].day.maxtemp_c}<sup>°C</sup></div>
                 <img src="${weather.forecast.forecastday[i].day.condition.icon}" alt="${weather.forecast.forecastday[i].day.condition.text}">
                 <div>${weather.forecast.forecastday[i].day.daily_chance_of_rain} % Rain</div>
             `;
         });
 
         // TODO: do the forecast
-
-        // TODO: manage the background vids
 
         // TODO: implement weather warnings with: https://warnungen.zamg.at/wsapp/api/getWarningsForCoords?lat=47.2627&lon=11.3945&lang=de
 
