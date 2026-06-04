@@ -144,13 +144,15 @@ sup {
 }
 
 #forecast {
-    margin-top: 0.5rem;
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 3rem;
 
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
     justify-content: center;
-    gap: 3rem;
-    align-items: center;
+    gap: 1rem;
 }
 
 .fc-day {
@@ -159,9 +161,28 @@ sup {
     padding: 1rem;
     background-color: grey;
     opacity: 80%;
+
+    width: 12pc;
 }
 
 .fc-day:hover {
     opacity: 50%;
     cursor: pointer;
+}
+
+.detailed-fc {
+    grid-column: span 3;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+#curr-temp {
+    font-size: 4rem;
+}
+
+#curr-condition {
+    width: 150px;
 }

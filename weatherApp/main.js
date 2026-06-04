@@ -20,7 +20,7 @@ const getCity = () => {
             }
         }, reject);
     });
-};
+}
 
 const getWeather = async () => {
     return new Promise((resolve, reject) => {
@@ -49,9 +49,9 @@ const showButton = document.querySelector('#show-detailed');
 const loadingEl = document.querySelector('#loading');
 const weatherEl = document.querySelector('#weather');
 
-showButton.addEventListener("click", (e) => {
-    detailed.classList.toggle('hidden');
-});
+// showButton.addEventListener("click", (e) => {
+//     detailed.classList.toggle('hidden');
+// });
 
 let loaded = false;
 
@@ -75,7 +75,9 @@ const showWeather = async () => {
         const month = date.getMonth();
 
         const temp = document.querySelector('#curr-temp');
-        temp.innerHTML = `${weather.current.temp_c}<sup>°C</sup> <br> feels like ${weather.current.feelslike_c}<sup>°C</sup>`;
+        const feelslikeTemp = document.querySelector('#feelslike-temp');
+        temp.innerHTML = `${weather.current.temp_c}<sup>°C</sup> <br>`;
+        feelslikeTemp.innerHTML = `feels like ${weather.current.feelslike_c}<sup>°C</sup>`
 
         const condi = document.querySelector('#curr-condition');
         condi.src = weather.current.condition.icon;
@@ -100,8 +102,12 @@ const showWeather = async () => {
         }
 
         const forecast = document.querySelector('#forecast');
-        Array.from(forecast.children).forEach((day, i) => {
+        const fcDays = forecast.querySelectorAll('.fc-day');
+
+        fcDays.forEach((day, i) => {
+            const date = new Date(weather.forecast.forecastday[i].date);
             day.innerHTML = `
+                <div>${date.toLocaleDateString("de-DE", {weekday: "long"})}</div> 
                 <div>${weather.forecast.forecastday[i].day.mintemp_c}<sup>°C</sup> - ${weather.forecast.forecastday[i].day.maxtemp_c}<sup>°C</sup></div>
                 <img src="${weather.forecast.forecastday[i].day.condition.icon}" alt="${weather.forecast.forecastday[i].day.condition.text}">
                 <div>${weather.forecast.forecastday[i].day.daily_chance_of_rain} % Rain</div>
@@ -196,7 +202,7 @@ const showWeather = async () => {
         loadingEl.style.display = 'none';
         weatherEl.style.display = 'block';
 
-        // console.log(weather);
+        console.log(weather);
         // console.log(city);
     } catch (err) {
         clearTimeout(retryTimeout);
@@ -205,5 +211,20 @@ const showWeather = async () => {
 };
 
 showWeather();
+
+showWeather();
+
+document.addEventListener("click", (e) => {
+    // Button Listener
+    if (e.target.id === 'show-detailed') {
+        document.querySelector('#detailed').classList.toggle('hidden');
+    }
+    
+    // Day Listener
+    const day = e.target.closest('.fc-day');
+    if (day) {
+        console.log("Day clicked:", day.id);
+    }
+});
 
 // Implement a school hour time 

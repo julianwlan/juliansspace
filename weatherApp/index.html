@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="120">
+    <!-- <meta http-equiv="refresh" content="120"> -->
     <title>Julian's Weather App</title>
     <link rel="stylesheet" href="/style.css">
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
@@ -17,19 +17,18 @@
         <a class="nav-bar-lnk" href="/weatherApp">Weather</a>
     </nav>
 
-    <video autoplay muted loop playsinline id="bg-video">
-        
-    </video>
+    <video autoplay muted loop playsinline id="bg-video"></video>
 
     <div id="loading">Loading weather...</div>
 
     <h1 class="heading-black" id="location"></h1>
 
     <div id="weather">
-        <h1 id="curr-temp">temp</h1>
+        <h1 id="curr-temp"></h1>
+        <h2 id="feelslike-temp"></h2>
         <img id="curr-condition"></img>
         <br>
-        <button id="show-detailed">Show detailed</button>
+        <button id="show-detailed">Details</button>
         <div id="detailed" class="hidden"></div>
 
         <h1 class="heading-black">3 Day Forecast</h1>
@@ -38,12 +37,64 @@
             <div id="day1" class="fc-day"></div>
             <div id="day2" class="fc-day"></div>
             <div id="day3" class="fc-day"></div>
+
+            <div id="detailed-fc" class="detailed-fc">
+                <div>
+                    <div>00:00</div>
+                    <img src="https://cdn.weatherapi.com/weather/64x64/day/122.png" alt="">
+                    <div>100 <sup>°C</sup></div>
+                    <div>30% Rain</div>
+                </div>
+                <div>
+                    <div>00:00</div>
+                    <img src="https://cdn.weatherapi.com/weather/64x64/day/122.png" alt="">
+                    <div>100 <sup>°C</sup></div>
+                    <div>30% Rain</div>
+                </div>
+                <div>
+                    <div>00:00</div>
+                    <img src="https://cdn.weatherapi.com/weather/64x64/day/122.png" alt="">
+                    <div>100 <sup>°C</sup></div>
+                    <div>30% Rain</div>
+                </div>
+                <div>
+                    <div>00:00</div>
+                    <img src="https://cdn.weatherapi.com/weather/64x64/day/122.png" alt="">
+                    <div>100 <sup>°C</sup></div>
+                    <div>30% Rain</div>
+                </div>
+                <div>
+                    <div>00:00</div>
+                    <img src="https://cdn.weatherapi.com/weather/64x64/day/122.png" alt="">
+                    <div>100 <sup>°C</sup></div>
+                    <div>30% Rain</div>
+                </div>
+                <div>
+                    <div>00:00</div>
+                    <img src="https://cdn.weatherapi.com/weather/64x64/day/122.png" alt="">
+                    <div>100 <sup>°C</sup></div>
+                    <div>30% Rain</div>
+                </div>
+                <div>
+                    <div>00:00</div>
+                    <img src="https://cdn.weatherapi.com/weather/64x64/day/122.png" alt="">
+                    <div>100 <sup>°C</sup></div>
+                    <div>30% Rain</div>
+                </div>
+                <div>
+                    <div>00:00</div>
+                    <img src="https://cdn.weatherapi.com/weather/64x64/day/122.png" alt="">
+                    <div>100 <sup>°C</sup></div>
+                    <div>30% Rain</div>
+                </div>
+            </div>
         </div>
     </div>
 
     <footer>
         <a href="/legal/legalNotice/">Imprint</a>
         <a href="https://www.weatherapi.com/" title="Free Weather API" target="_blank"><img src='//cdn.weatherapi.com/v4/images/weatherapi_logo.png' alt="Weather data by WeatherAPI.com"></a>
+        <a href="https://www.geosphere.at/de" title="Weather Warnings"><img src="https://www.geosphere.at/static/media/Logo.9bc86c1a.svg" alt="Weather Warnings by Geospere Austria"></a>
     </footer>
 
     <script src="main.js"></script>
