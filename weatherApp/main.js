@@ -44,16 +44,86 @@ const getWeather = async () => {
     });
 }
 
+const showHourlyFc = (day) => {
+    const forecast = weather.forecast.forecastday;
+    const rthour = date.getHours();
+    
+    
+    switch(day) {
+        case 'day1':
+            detailedFc.innerHTML = '';
+            forecast[0].hour
+                .filter((hour) => {
+                    const hourTime = new Date(hour.time).getHours();
+                    return hourTime >= rthour;
+                })
+                .forEach((hour) => {
+                    const hourFcElmnt = document.createElement('div');
+                    hourFcElmnt.innerHTML = `
+                        <div>${new Date(hour.time).getHours()}:00</div>
+                        <img src="${hour.condition.icon}" alt="${hour.condition.text}">
+                        <div>${hour.temp_c} <sup>°C</sup></div>
+                        <div>${hour.chance_of_rain}% Rain</div>
+                    `;
+                    detailedFc.appendChild(hourFcElmnt);
+                });    
+            break;
+        case 'day2':
+            detailedFc.innerHTML = '';
+            forecast[1].hour
+                .filter((hour) => {
+                    const hourTime = new Date(hour.time).getHours();
+                    return hourTime >= rthour;
+                })
+                .forEach((hour) => {
+                    const hourFcElmnt = document.createElement('div');
+                    hourFcElmnt.innerHTML = `
+                        <div>${new Date(hour.time).getHours()}:00</div>
+                        <img src="${hour.condition.icon}" alt="${hour.condition.text}">
+                        <div>${hour.temp_c} <sup>°C</sup></div>
+                        <div>${hour.chance_of_rain}% Rain</div>
+                    `;
+                    detailedFc.appendChild(hourFcElmnt);
+                });    
+            break;
+        case 'day3':
+            detailedFc.innerHTML = '';
+            forecast[2].hour
+                .filter((hour) => {
+                    const hourTime = new Date(hour.time).getHours();
+                    return hourTime >= rthour;
+                })
+                .forEach((hour) => {
+                    const hourFcElmnt = document.createElement('div');
+                    hourFcElmnt.innerHTML = `
+                        <div>${new Date(hour.time).getHours()}:00</div>
+                        <img src="${hour.condition.icon}" alt="${hour.condition.text}">
+                        <div>${hour.temp_c} <sup>°C</sup></div>
+                        <div>${hour.chance_of_rain}% Rain</div>
+                    `;
+                    detailedFc.appendChild(hourFcElmnt);
+                });    
+            break;
+        default:
+            hourlyFcContainer.innerHTML = 'No hourly forecast available :(';
+    }
+}
+
+const date = new Date();
+const detailedFc = document.querySelector('#detailed-fc');
+const hourlyFcContainer = document.querySelector('#detailed-fc-container');
 const detailed = document.querySelector('#detailed');
 const showButton = document.querySelector('#show-detailed');
 const loadingEl = document.querySelector('#loading');
 const weatherEl = document.querySelector('#weather');
-
-// showButton.addEventListener("click", (e) => {
-//     detailed.classList.toggle('hidden');
-// });
-
+const temp = document.querySelector('#curr-temp');
+const feelslikeTemp = document.querySelector('#feelslike-temp');
+const condi = document.querySelector('#curr-condition');
+const forecast = document.querySelector('#forecast');
+const fcDays = forecast.querySelectorAll('.fc-day');
+const background = document.querySelector('#bg-video');
 let loaded = false;
+let weather = null;
 
 const showWeather = async () => {
     loadingEl.style.display = 'block';
@@ -70,16 +140,13 @@ const showWeather = async () => {
         const city = await getCity();
         document.querySelector('#location').innerHTML = city;
         
-        const weather = await getWeather();
+        weather = await getWeather();
         const date = new Date();
         const month = date.getMonth();
 
-        const temp = document.querySelector('#curr-temp');
-        const feelslikeTemp = document.querySelector('#feelslike-temp');
         temp.innerHTML = `${weather.current.temp_c}<sup>°C</sup> <br>`;
         feelslikeTemp.innerHTML = `feels like ${weather.current.feelslike_c}<sup>°C</sup>`
 
-        const condi = document.querySelector('#curr-condition');
         condi.src = weather.current.condition.icon;
 
         const isWinter = month === 11 || month === 0 || month === 1;
@@ -101,9 +168,6 @@ const showWeather = async () => {
             `;
         }
 
-        const forecast = document.querySelector('#forecast');
-        const fcDays = forecast.querySelectorAll('.fc-day');
-
         fcDays.forEach((day, i) => {
             const date = new Date(weather.forecast.forecastday[i].date);
             day.innerHTML = `
@@ -118,7 +182,6 @@ const showWeather = async () => {
 
         // TODO: implement weather warnings with: https://warnungen.zamg.at/wsapp/api/getWarningsForCoords?lat=47.2627&lon=11.3945&lang=de
 
-        const background = document.querySelector('#bg-video');
         const source = document.createElement('source');
         source.type = 'video/mp4';
 
@@ -212,18 +275,16 @@ const showWeather = async () => {
 
 showWeather();
 
-showWeather();
-
 document.addEventListener("click", (e) => {
-    // Button Listener
     if (e.target.id === 'show-detailed') {
-        document.querySelector('#detailed').classList.toggle('hidden');
+        detailed.classList.toggle('hidden');
     }
     
-    // Day Listener
     const day = e.target.closest('.fc-day');
     if (day) {
         console.log("Day clicked:", day.id);
+        showHourlyFc(day.id);
+        hourlyFcContainer.classList.toggle('hidden');
     }
 });
 
