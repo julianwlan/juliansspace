@@ -1,27 +1,3 @@
-const getCity = () => {
-    return new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(async (pos) => {
-            try {
-                const position = {
-                    lati: pos.coords.latitude,
-                    longi: pos.coords.longitude
-                };
-
-                const response = await fetch(
-                    `https://api.opencagedata.com/geocode/v1/json?key=6dd822cb65c648db99589b65edfb6a90&&q=${position.lati}+${position.longi}&pretty=1&no_annotations=1`
-                );
-
-                const dataJSON = await response.json();
-                const city = dataJSON.results[0].components.city || dataJSON.results[0].components.village || dataJSON.results[0].components.suburb || "";
-
-                resolve(city);
-            } catch (err) {
-                reject(err);
-            }
-        }, reject);
-    });
-}
-
 const getWeather = async () => {
     return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(async (pos) => {
@@ -110,6 +86,7 @@ const showHourlyFc = (day) => {
 }
 
 const date = new Date();
+const locationText = document.querySelector('#location');
 const detailedFc = document.querySelector('#detailed-fc');
 const hourlyFcContainer = document.querySelector('#detailed-fc-container');
 const detailed = document.querySelector('#detailed');
@@ -124,6 +101,8 @@ const fcDays = forecast.querySelectorAll('.fc-day');
 const background = document.querySelector('#bg-video');
 let loaded = false;
 let weather = null;
+let currPosition = null;
+let weatherPos = currPosition;
 
 const showWeather = async () => {
     loadingEl.style.display = 'block';
@@ -137,10 +116,8 @@ const showWeather = async () => {
     }, 2000);
 
     try {
-        const city = await getCity();
-        document.querySelector('#location').innerHTML = city;
-        
         weather = await getWeather();
+        locationText.innerHTML = `${weather.location.name || ''}, ${weather.location.region}`;
         const date = new Date();
         const month = date.getMonth();
 
@@ -178,17 +155,12 @@ const showWeather = async () => {
             `;
         });
 
-        // TODO: do the forecast
-
-        // TODO: implement weather warnings with: https://warnungen.zamg.at/wsapp/api/getWarningsForCoords?lat=47.2627&lon=11.3945&lang=de
-
         const source = document.createElement('source');
         source.type = 'video/mp4';
 
         const condition_response = await fetch("https://www.weatherapi.com/docs/weather_conditions.json");
         const conditions = await condition_response.json();
         const texts = conditions.map(c => c.day);
-        // console.log(texts);
         
         switch(weather.current.condition.text) {
             case texts[0]:  // Sunny
@@ -266,7 +238,6 @@ const showWeather = async () => {
         weatherEl.style.display = 'block';
 
         console.log(weather);
-        // console.log(city);
     } catch (err) {
         clearTimeout(retryTimeout);
         console.error('Fehler beim Laden:', err);
@@ -289,3 +260,4 @@ document.addEventListener("click", (e) => {
 });
 
 // Implement a school hour time 
+// TODO: implement weather warnings with: https://warnungen.zamg.at/wsapp/api/getWarningsForCoords?lat=47.2627&lon=11.3945&lang=de
