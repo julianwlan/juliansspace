@@ -2,13 +2,13 @@ const getWeather = async () => {
     return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(async (pos) => {
             try {
-                const position = {
+                 currPosition = {
                     lati: pos.coords.latitude,
                     longi: pos.coords.longitude
                 };
 
                 const response = await fetch(
-                    `https://api.weatherapi.com/v1/forecast.json?days=4&key=ff76f32b6d9940a9b2674941262005&lang=en&q=${position.lati},${position.longi}`
+                    `https://api.weatherapi.com/v1/forecast.json?days=4&key=ff76f32b6d9940a9b2674941262005&lang=en&q=${weatherPos.lati},${weatherPos.longi}`
                 );
 
                 const weather = await response.json();
@@ -46,46 +46,58 @@ const showHourlyFc = (day) => {
             break;
         case 'day2':
             detailedFc.innerHTML = '';
-            forecast[1].hour
-                .filter((hour) => {
-                    const hourTime = new Date(hour.time).getHours();
-                    return hourTime >= rthour;
-                })
-                .forEach((hour) => {
-                    const hourFcElmnt = document.createElement('div');
-                    hourFcElmnt.innerHTML = `
-                        <div>${new Date(hour.time).getHours()}:00</div>
-                        <img src="${hour.condition.icon}" alt="${hour.condition.text}">
-                        <div>${hour.temp_c} <sup>°C</sup></div>
-                        <div>${hour.chance_of_rain}% Rain</div>
-                    `;
-                    detailedFc.appendChild(hourFcElmnt);
-                });    
+            forecast[1].hour.forEach((hour) => {
+                const hourFcElmnt = document.createElement('div');
+                hourFcElmnt.innerHTML = `
+                    <div>${new Date(hour.time).getHours()}:00</div>
+                    <img src="${hour.condition.icon}" alt="${hour.condition.text}">
+                    <div>${hour.temp_c} <sup>°C</sup></div>
+                    <div>${hour.chance_of_rain}% Rain</div>
+                `;
+                detailedFc.appendChild(hourFcElmnt);
+            });
             break;
         case 'day3':
             detailedFc.innerHTML = '';
-            forecast[2].hour
-                .filter((hour) => {
-                    const hourTime = new Date(hour.time).getHours();
-                    return hourTime >= rthour;
-                })
-                .forEach((hour) => {
-                    const hourFcElmnt = document.createElement('div');
-                    hourFcElmnt.innerHTML = `
-                        <div>${new Date(hour.time).getHours()}:00</div>
-                        <img src="${hour.condition.icon}" alt="${hour.condition.text}">
-                        <div>${hour.temp_c} <sup>°C</sup></div>
-                        <div>${hour.chance_of_rain}% Rain</div>
-                    `;
-                    detailedFc.appendChild(hourFcElmnt);
-                });    
+            forecast[2].hour.forEach((hour) => {
+                const hourFcElmnt = document.createElement('div');
+                hourFcElmnt.innerHTML = `
+                    <div>${new Date(hour.time).getHours()}:00</div>
+                    <img src="${hour.condition.icon}" alt="${hour.condition.text}">
+                    <div>${hour.temp_c} <sup>°C</sup></div>
+                    <div>${hour.chance_of_rain}% Rain</div>
+                `;
+                detailedFc.appendChild(hourFcElmnt);
+            });
             break;
         default:
             hourlyFcContainer.innerHTML = 'No hourly forecast available :(';
     }
 }
 
+const showWeatherWarnings = async (pos) => {
+    try {
+        const response = await fetch(`https://warnungen.zamg.at/wsapp/api/getWarningsForCoords?lat=${pos.lati}&lon=${pos.longi}&lang=de`);
+        weatherWarnings = await response.json();
+        console.log(weatherWarnings);
+    } catch(err) {
+        console.log(err);
+    }
+}
+
 const date = new Date();
+const defaultLocationsAustria = [
+    {name: 'Innsbruck', lati: 47.259659, longi: 11.400375},
+    {name: 'Bregenz', lati: 47.50075, longi: 9.74231},
+    {name: 'Salzburg', lati: 47.80000, longi: 13.04500},
+    {name: 'Linz', lati: 48.30639, longi: 14.28639},
+    {name: 'St. Pölten', lati: 48.2044, longi: 15.6229},
+    {name: 'Wien', lati: 48.210033, longi: 16.363449},
+    {name: 'Eisenstadt', lati: 47.850, longi: 16.517},
+    {name: 'Graz', lati: 47.07083, longi: 15.43861},
+    {name: 'Klagenfurt', lati: 46.6357, longi: 14.3118},
+    {name: 'Lienz', lati: 46.82972, longi: 12.76972}
+]
 const locationText = document.querySelector('#location');
 const detailedFc = document.querySelector('#detailed-fc');
 const hourlyFcContainer = document.querySelector('#detailed-fc-container');
@@ -101,8 +113,10 @@ const fcDays = forecast.querySelectorAll('.fc-day');
 const background = document.querySelector('#bg-video');
 let loaded = false;
 let weather = null;
+let weatherWarnings = null;
 let currPosition = null;
-let weatherPos = currPosition;
+let weatherPos = defaultLocationsAustria[0];
+
 
 const showWeather = async () => {
     loadingEl.style.display = 'block';
@@ -237,6 +251,7 @@ const showWeather = async () => {
         loadingEl.style.display = 'none';
         weatherEl.style.display = 'block';
 
+        await showWeatherWarnings(weatherPos);
         console.log(weather);
     } catch (err) {
         clearTimeout(retryTimeout);
@@ -259,5 +274,5 @@ document.addEventListener("click", (e) => {
     }
 });
 
-// Implement a school hour time 
-// TODO: implement weather warnings with: https://warnungen.zamg.at/wsapp/api/getWarningsForCoords?lat=47.2627&lon=11.3945&lang=de
+// TODO: Implement a school hour time 
+// TODO: Implement weather warnings with: https://warnungen.zamg.at/wsapp/api/getWarningsForCoords?lat=47.2627&lon=11.3945&lang=de

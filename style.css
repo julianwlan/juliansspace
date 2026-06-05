@@ -65,6 +65,11 @@ html {
     color: black;
     text-align: center;
     letter-spacing: 2px;
+    /* text-decoration: underline; */
+}
+
+#forecast-heading {
+    text-decoration: underline;
 }
 
 #bg-video {
@@ -198,4 +203,29 @@ sup {
 
 #curr-condition {
     width: 150px;
+}
+
+#wthr-warning-banner {
+    width: 98%;
+    margin: 1rem auto;
+    padding: 1rem 2rem;
+    color: white;
+    background-color: red;
+    border: 2px solid black;
+    border-radius: 2rem;
+    text-align: center;
+}
+
+#wthr-warning-banner div {
+    font-size: x-large;
+}
+
+.underconstruction {
+    width: 100%;
+    margin: 2rem auto;
+    text-align: center;
+    /* color: blue; */
+    background-color: yellow;
+    height: 50px;
+    font-size: xx-large;
 }

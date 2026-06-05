@@ -19,9 +19,15 @@
 
     <video autoplay muted loop playsinline id="bg-video"></video>
 
+    <div class="underconstruction">This site is still under construction. &#x1F3D7;</div>
+
     <div id="loading">Loading weather...</div>
 
     <h1 class="heading-black" id="location"></h1>
+
+    <div id="wthr-warning-banner">
+        <!-- <div>Warning Warning!!! Much rain today!!!</div> -->
+    </div>
 
     <div id="weather">
         <h1 id="curr-temp"></h1>
@@ -31,7 +37,7 @@
         <button id="show-detailed">Details</button>
         <div id="detailed" class="hidden"></div>
 
-        <h1 class="heading-black">3 Day Forecast</h1>
+        <h1 class="heading-black" id="forecast-heading">3 Day Forecast</h1>
 
         <div id="forecast">
             <div id="day1" class="fc-day"></div>
@@ -49,7 +55,7 @@
         <a href="/legal/legalNotice/">Imprint</a>
         <a href="https://www.weatherapi.com/" title="Free Weather API" target="_blank"><img src='//cdn.weatherapi.com/v4/images/weatherapi_logo.png' alt="Weather data by WeatherAPI.com"></a>
         <a href="https://www.geosphere.at/de" title="Weather Warnings"><img src="https://www.geosphere.at/static/media/Logo.9bc86c1a.svg" alt="Weather Warnings by Geospere Austria"></a>
-        <a href="https://opencagedata.com"><img src="https://assets.opencagedata.com/assets/opencage-logo.green-9b2d61130a275515abf13dbe8c5e47a50fb9d4562da92b52f88c7dac85435dd3.svg" alt="Geocoding provided by Opencage">Geocoding services provided by OpenCage</a>
+        <a href="https://opencagedata.com"><img src="https://assets.opencagedata.com/assets/opencage-logo.green-9b2d61130a275515abf13dbe8c5e47a50fb9d4562da92b52f88c7dac85435dd3.svg" alt="Geocoding services provided by Opencage">Geocoding services provided by OpenCage</a>
     </footer>
 
     <script src="main.js"></script>
