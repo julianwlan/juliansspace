@@ -80,8 +80,14 @@ const showWeatherWarnings = async (pos) => {
         const response = await fetch(`https://warnungen.zamg.at/wsapp/api/getWarningsForCoords?lat=${pos.lati}&lon=${pos.longi}&lang=de`);
         weatherWarnings = await response.json();
         console.log(weatherWarnings);
+
+        // TODO: Implement weather warnings with: https://warnungen.zamg.at/wsapp/api/getWarningsForCoords?lat=47.2627&lon=11.3945&lang=de
     } catch(err) {
         console.log(err);
+    }
+
+    if(weatherWarnings.properties.warnings.length) {
+        weWaBanner.classList.toggle('hidden');
     }
 }
 
@@ -97,7 +103,8 @@ const defaultLocationsAustria = [
     {name: 'Graz', lati: 47.07083, longi: 15.43861},
     {name: 'Klagenfurt', lati: 46.6357, longi: 14.3118},
     {name: 'Lienz', lati: 46.82972, longi: 12.76972}
-]
+];
+const weWaBanner = document.querySelector('#wthr-warning-banner');
 const locationText = document.querySelector('#location');
 const detailedFc = document.querySelector('#detailed-fc');
 const hourlyFcContainer = document.querySelector('#detailed-fc-container');
@@ -268,11 +275,10 @@ document.addEventListener("click", (e) => {
     
     const day = e.target.closest('.fc-day');
     if (day) {
-        console.log("Day clicked:", day.id);
+        // console.log("Day clicked:", day.id);
         showHourlyFc(day.id);
         hourlyFcContainer.classList.toggle('hidden');
     }
 });
 
 // TODO: Implement a school hour time 
-// TODO: Implement weather warnings with: https://warnungen.zamg.at/wsapp/api/getWarningsForCoords?lat=47.2627&lon=11.3945&lang=de
