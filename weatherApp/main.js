@@ -1,23 +1,9 @@
 const getWeather = async () => {
-    return new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(async (pos) => {
-            try {
-                 currPosition = {
-                    lati: pos.coords.latitude,
-                    longi: pos.coords.longitude
-                };
-
-                const response = await fetch(
-                    `https://api.weatherapi.com/v1/forecast.json?days=4&key=ff76f32b6d9940a9b2674941262005&lang=en&q=${weatherPos.lati},${weatherPos.longi}`
-                );
-
-                const weather = await response.json();
-                resolve(weather);
-            } catch (err) {
-                reject(err);
-            }
-        }, reject);
-    });
+    const response = await fetch(
+        `https://api.weatherapi.com/v1/forecast.json?days=4&key=ff76f32b6d9940a9b2674941262005&lang=en&q=${weatherPos.lati},${weatherPos.longi}`
+    );
+    const weather = await response.json();
+    return weather;
 }
 
 const showHourlyFc = (day) => {
@@ -79,7 +65,7 @@ const showWeatherWarnings = async (pos) => {
     try {
         const response = await fetch(`https://warnungen.zamg.at/wsapp/api/getWarningsForCoords?lat=${pos.lati}&lon=${pos.longi}&lang=de`);
         weatherWarnings = await response.json();
-        console.log(weatherWarnings);
+        // console.log(weatherWarnings);
 
         // TODO: Implement weather warnings with: https://warnungen.zamg.at/wsapp/api/getWarningsForCoords?lat=47.2627&lon=11.3945&lang=de
     } catch(err) {
@@ -93,8 +79,8 @@ const showWeatherWarnings = async (pos) => {
 
 const date = new Date();
 const defaultLocationsAustria = [
-    {name: 'Innsbruck', lati: 47.259659, longi: 11.400375},
     {name: 'Bregenz', lati: 47.503395, longi: 9.738808},
+    {name: 'Innsbruck', lati: 47.259659, longi: 11.400375},
     {name: 'Salzburg', lati: 47.80000, longi: 13.04500},
     {name: 'Linz', lati: 48.30639, longi: 14.28639},
     {name: 'St. Pölten', lati: 48.204437, longi: 15.630731},
@@ -103,6 +89,11 @@ const defaultLocationsAustria = [
     {name: 'Graz', lati: 47.067683, longi: 15.441893},
     {name: 'Klagenfurt', lati: 46.624238, longi: 14.308111},
     {name: 'Lienz', lati: 46.82972, longi: 12.76972}
+];
+const usefulLocationsAustria = [
+    {name: 'Andritz', lati: 47.117345, longi: 15.433779},
+    {name: 'Kaindorf an der Sulm', lati: 46.800976, longi: 15.541158},
+    {name: 'Allerheiligen bei Wildon', lati: 46.916144, longi: 15.551369}
 ];
 const weWaBanner = document.querySelector('#wthr-warning-banner');
 const locationText = document.querySelector('#location');
@@ -259,7 +250,7 @@ const showWeather = async () => {
         weatherEl.style.display = 'block';
 
         await showWeatherWarnings(weatherPos);
-        console.log(weather);
+        // console.log(weather);
     } catch (err) {
         clearTimeout(retryTimeout);
         console.error('Fehler beim Laden:', err);
@@ -275,9 +266,63 @@ document.addEventListener("click", (e) => {
     
     const day = e.target.closest('.fc-day');
     if (day) {
-        // console.log("Day clicked:", day.id);
         showHourlyFc(day.id);
         hourlyFcContainer.classList.toggle('hidden');
+    }
+
+    const location = e.target.closest('.location-btn');
+    if(location) {
+        switch(location.id) {
+            case 'curr-location':
+                navigator.geolocation.getCurrentPosition(pos => {
+                    weatherPos = {
+                        lati: pos.coords.latitude,
+                        longi: pos.coords.longitude
+                    };
+                }, err => console.log(err));
+                break;
+            case 'location-bregenz':
+                weatherPos = defaultLocationsAustria[0];
+                break;
+            case 'location-innsbruck':
+                weatherPos = defaultLocationsAustria[1];
+                break;
+            case 'location-salzburg':
+                weatherPos = defaultLocationsAustria[2];
+                break;
+            case 'location-linz':
+                weatherPos = defaultLocationsAustria[3];
+                break;
+            case 'location-stpölten':
+                weatherPos = defaultLocationsAustria[4];
+                break;
+            case 'location-wien':
+                weatherPos = defaultLocationsAustria[5];
+                break;
+            case 'location-eisenstadt':
+                weatherPos = defaultLocationsAustria[6];
+                break;
+            case 'location-graz':
+                weatherPos = defaultLocationsAustria[7];
+                break;
+            case 'location-klagenfurt':
+                weatherPos = defaultLocationsAustria[8];
+                break;
+            case 'location-lienz':
+                weatherPos = defaultLocationsAustria[9];
+                break;
+            case 'location-andritz':
+                weatherPos = usefulLocationsAustria[0];
+                break;
+            case 'location-kaindorf':
+                weatherPos = usefulLocationsAustria[1];
+                break;
+            case 'location-ahbwildon':
+                weatherPos = usefulLocationsAustria[2];
+                break;
+        }
+
+        showWeather();
     }
 });
 
