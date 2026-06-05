@@ -94,14 +94,14 @@ const showWeatherWarnings = async (pos) => {
 const date = new Date();
 const defaultLocationsAustria = [
     {name: 'Innsbruck', lati: 47.259659, longi: 11.400375},
-    {name: 'Bregenz', lati: 47.50075, longi: 9.74231},
+    {name: 'Bregenz', lati: 47.503395, longi: 9.738808},
     {name: 'Salzburg', lati: 47.80000, longi: 13.04500},
     {name: 'Linz', lati: 48.30639, longi: 14.28639},
-    {name: 'St. Pölten', lati: 48.2044, longi: 15.6229},
+    {name: 'St. Pölten', lati: 48.204437, longi: 15.630731},
     {name: 'Wien', lati: 48.210033, longi: 16.363449},
     {name: 'Eisenstadt', lati: 47.850, longi: 16.517},
     {name: 'Graz', lati: 47.07083, longi: 15.43861},
-    {name: 'Klagenfurt', lati: 46.6357, longi: 14.3118},
+    {name: 'Klagenfurt', lati: 46.624238, longi: 14.308111},
     {name: 'Lienz', lati: 46.82972, longi: 12.76972}
 ];
 const weWaBanner = document.querySelector('#wthr-warning-banner');
@@ -122,7 +122,7 @@ let loaded = false;
 let weather = null;
 let weatherWarnings = null;
 let currPosition = null;
-let weatherPos = defaultLocationsAustria[0];
+let weatherPos = defaultLocationsAustria[7];
 
 
 const showWeather = async () => {
@@ -138,7 +138,7 @@ const showWeather = async () => {
 
     try {
         weather = await getWeather();
-        locationText.innerHTML = `${weather.location.name || ''}, ${weather.location.region}`;
+        locationText.innerHTML = `${weather.location.name || ''}, ${weather.location.region || ''}`;
         const date = new Date();
         const month = date.getMonth();
 
