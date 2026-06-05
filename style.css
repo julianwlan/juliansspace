@@ -179,8 +179,11 @@ sup {
 }
 
 .fc-day:hover {
-    opacity: 50%;
+    background-color: black;
+    opacity: 100%;
     cursor: pointer;
+    color: white;
+    border: 2px solid white;
 }
 
 #detailed-fc-container {
@@ -228,4 +231,46 @@ sup {
     background-color: yellow;
     height: 50px;
     font-size: xx-large;
+}
+
+#locations {
+    background-color: black;
+    opacity: 80%;
+    width: 98%;
+    margin: 1rem auto;
+    border-radius: 1rem;
+    padding: 2rem 4rem;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1rem;
+    justify-items: center;
+
+}
+
+.location-btn {
+    color: black;
+    background-color: gray;
+    border: 2px solid black;
+    border-radius: 1rem;
+    width: 100%;
+    padding: 1rem 2rem;
+    opacity: 100%;
+    font-size: x-large;
+}
+
+.location-btn:hover {
+    border: 2px solid white;
+    background-color: black;
+    color: white;
+    opacity: 100%;
+    cursor: pointer;
+}
+
+#location-kaindorf {
+    grid-column: span 2;
+}
+
+#location-ahbwildon {
+    grid-column: span 2;
 }

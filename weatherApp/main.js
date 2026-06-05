@@ -100,7 +100,7 @@ const defaultLocationsAustria = [
     {name: 'St. Pölten', lati: 48.204437, longi: 15.630731},
     {name: 'Wien', lati: 48.210033, longi: 16.363449},
     {name: 'Eisenstadt', lati: 47.850, longi: 16.517},
-    {name: 'Graz', lati: 47.07083, longi: 15.43861},
+    {name: 'Graz', lati: 47.067683, longi: 15.441893},
     {name: 'Klagenfurt', lati: 46.624238, longi: 14.308111},
     {name: 'Lienz', lati: 46.82972, longi: 12.76972}
 ];
