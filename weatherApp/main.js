@@ -65,15 +65,63 @@ const showWeatherWarnings = async (pos) => {
     try {
         const response = await fetch(`https://warnungen.zamg.at/wsapp/api/getWarningsForCoords?lat=${pos.lati}&lon=${pos.longi}&lang=de`);
         weatherWarnings = await response.json();
-        // console.log(weatherWarnings);
+        console.log(weatherWarnings);
 
-        // TODO: Implement weather warnings with: https://warnungen.zamg.at/wsapp/api/getWarningsForCoords?lat=47.2627&lon=11.3945&lang=de
+        // Zeige Warnungen im Banner und Modal
+        const warnings = weatherWarnings.properties?.warnings || [];
+        
+        if(warnings.length > 0) {
+            weWaBanner.classList.remove('hidden');
+            
+            // Banner Summary
+            const summaryText = warnings.length === 1 
+                ? warnings[0].properties.text 
+                : `${warnings.length} Wetterwarnungen aktiv`;
+            
+            warningSummary.innerHTML = `
+                ⚠️ <strong>${summaryText}</strong>
+                <span class="warning-badge">Klick für Details</span>
+            `;
+            
+            // Modal Details
+            const detailsHtml = warnings.map((warning, index) => {
+                const props = warning.properties;
+                const startDate = new Date(props.begin);
+                const endDate = new Date(props.end);
+                const timeRange = `${startDate.toLocaleString('de-DE')} - ${endDate.toLocaleString('de-DE')}`;
+                
+                return `
+                    <div class="warning-item">
+                        <div class="warning-header">
+                            <div class="warning-type">
+                                ⚠️ ${props.text}
+                            </div>
+                            <div class="warning-time">${timeRange}</div>
+                        </div>
+                        
+                        <div class="warning-description">
+                            ${props.meteotext}
+                        </div>
+                        
+                        <div class="warning-section">
+                            <div class="warning-section-title">📋 Auswirkungen:</div>
+                            <div class="warning-section-content">${props.auswirkungen}</div>
+                        </div>
+                        
+                        <div class="warning-section">
+                            <div class="warning-section-title">💡 Empfehlungen:</div>
+                            <div class="warning-section-content">${props.empfehlungen}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            warningDetailsContainer.innerHTML = detailsHtml;
+        } else {
+            weWaBanner.classList.add('hidden');
+        }
     } catch(err) {
-        console.log(err);
-    }
-
-    if(weatherWarnings.properties.warnings.length) {
-        weWaBanner.classList.toggle('hidden');
+        console.log('Fehler beim Laden der Wetterwarnungen:', err);
     }
 }
 
@@ -96,6 +144,10 @@ const usefulLocationsAustria = [
     {name: 'Allerheiligen bei Wildon', lati: 46.916144, longi: 15.551369}
 ];
 const weWaBanner = document.querySelector('#wthr-warning-banner');
+const warningSummary = document.querySelector('#warning-summary');
+const warningModal = document.querySelector('#warning-modal');
+const warningDetailsContainer = document.querySelector('#warning-details-container');
+const warningModalClose = document.querySelector('.warning-modal-close');
 const locationText = document.querySelector('#location');
 const detailedFc = document.querySelector('#detailed-fc');
 const hourlyFcContainer = document.querySelector('#detailed-fc-container');
@@ -324,6 +376,22 @@ document.addEventListener("click", (e) => {
 
         showWeather();
     }
+
+    // Warning Banner / Modal Handler
+    if (e.target.closest('#warning-summary')) {
+        warningModal.classList.remove('hidden');
+    }
+
+    if (e.target.classList.contains('warning-modal-close') || e.target === warningModal) {
+        warningModal.classList.add('hidden');
+    }
 });
 
-// TODO: Implement a school hour time 
+// Close modal wenn man außerhalb klickt
+warningModal.addEventListener('click', (e) => {
+    if (e.target === warningModal) {
+        warningModal.classList.add('hidden');
+    }
+});
+
+// TODO: Implement a school hour time
