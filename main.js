@@ -359,6 +359,12 @@ warningModal.addEventListener('click', (e) => {
 const LAST_NAV_PAGE_KEY = 'lastNavbarPage';
 const NAV_PAGE_HOME = 'home';
 const NAV_PAGE_WEATHER = 'weather';
+const ISA_LOGIN_PASSWORD = 'nico';
+
+const topBar = document.querySelector('#top-bar');
+const loginBtn = document.querySelector('#login-btn');
+const loginForm = document.querySelector('#login-form');
+const loginPasswordInput = document.querySelector('#asisa');
 
 const hideSection = (sectionId) => {
     const section = document.querySelector(sectionId);
@@ -384,7 +390,7 @@ const applyBodyTheme = (sectionId) => {
 }
 
 const manageSections = (sectionId) => {
-    const sections = ['#home', '#weatherApp', '#legal'];
+    const sections = ['#home', '#weatherApp', '#legal', '#isasspace'];
     sections.forEach(section => {
         hideSection(section);
     });
@@ -392,6 +398,17 @@ const manageSections = (sectionId) => {
     document.querySelector(sectionId).classList.remove('hidden');
     applyBodyTheme(sectionId);
 }
+
+const showLoginOnly = () => {
+    manageSections('#isasspace');
+    topBar?.classList.add('hidden');
+    loginPasswordInput?.focus();
+};
+
+const redirectToHome = () => {
+    topBar?.classList.remove('hidden');
+    manageSections('#home');
+};
 
 const saveLastNavbarPage = (page) => {
     try {
@@ -436,8 +453,29 @@ document.querySelector('#legal-btn-weather')?.addEventListener('click', () => {
     manageSections('#legal');
 });
 
+loginBtn?.addEventListener('click', () => {
+    showLoginOnly();
+});
+
+loginForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const enteredPassword = loginPasswordInput?.value || '';
+
+    if (enteredPassword === ISA_LOGIN_PASSWORD) {
+        window.location.href = 'https://isa.juliansspace.com';
+        return;
+    }
+
+    if (loginPasswordInput) {
+        loginPasswordInput.value = '';
+    }
+
+    redirectToHome();
+});
+
 const restoreLastNavbarPage = async () => {
     const lastPage = getLastNavbarPage();
+    topBar?.classList.remove('hidden');
 
     if (lastPage === NAV_PAGE_WEATHER) {
         manageSections('#weatherApp');
