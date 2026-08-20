@@ -23,6 +23,11 @@ html {
     position: relative;
 }
 
+.weather-body {
+    margin: 0;
+    position: relative;
+}
+
 .legal-body {
     margin: 1rem;
     position: relative;
@@ -42,19 +47,26 @@ html {
     margin: 2vw;
     border-radius: 2vw;
     padding: 0.5vh 10vw;
+    position: relative;
+    z-index: 20;
     
     display: flex;
 
     flex-direction: row;
     justify-content: space-between;
-
     /* align-items: center; */
+}
 
-
+.navbar-btn {
+    background-color: black;
+    color: white;
+    border: none;
+    font-size: 1vw;
+    cursor: pointer;
 }
 
 .heading {
-    margin-top: 5rem;
+    margin: 5rem;
     color: white;
     text-align: center;
     letter-spacing: 2px;
@@ -66,6 +78,24 @@ html {
     text-align: center;
     letter-spacing: 2px;
     /* text-decoration: underline; */
+}
+
+#date-clock-panel {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+#clock {
+    font-size: 6rem;
+}
+
+#date {
+    font-size: 1.5rem;
+    letter-spacing: 4px;
 }
 
 #forecast-heading {
@@ -85,7 +115,18 @@ html {
 
     object-fit: cover;
 
-    z-index: -999;
+    z-index: 0;
+    pointer-events: none;
+}
+
+#weatherApp {
+    position: relative;
+    z-index: 1;
+}
+
+#weatherApp > *:not(#bg-video) {
+    position: relative;
+    z-index: 1;
 }
 
 footer {
@@ -130,10 +171,6 @@ a {
     text-align: center;
     padding: 2rem 0;
     font-size: 1.2rem;
-}
-
-.hidden {
-    display: none;
 }
 
 #show-detailed {
@@ -483,10 +520,6 @@ sup {
         padding: 0.5vh 2vw;
         font-size: 1.4vh;
         border-radius: 1rem;
-    }
-
-    .nav-bar-lnk {
-        font-size: 1rem;
     }
 
     .heading-black,
