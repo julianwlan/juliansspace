@@ -13,19 +13,138 @@
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Noto+Sans+Mono:wght@100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
 </head>
 <body class="normal-body">
+    <div id="top-bar">
+        <nav class="nav-bar" id="nav-bar">
+            <button class="navbar-btn" id="home-btn">Home</button>
+            <button class="navbar-btn" id="weather-btn">Weather</button>
+        </nav>
 
-    <nav class="nav-bar">
-        <a class="nav-bar-lnk" href="/">Home</a>
-        <a class="nav-bar-lnk" href="/weatherApp">Weather</a>
-    </nav>
-
-    <h1 class="heading">Welcome to Julian's Space!</h1>
+        <button id="login-btn">&#128100; Login</button>
+    </div>
     
-    <br><br><br><br><br><br>
 
-    <footer>
-        <a href="legal/legalNotice/">Impressum</a>
-    </footer>
+    <!-- Home -->
+    <div id="home">
+        <h1 class="heading">Welcome to Julian's Space!</h1>
+    
+        <div id="date-clock-panel">
+            <div id="clock"></div>
+            <div id="date"></div>
+        </div>
 
+        <footer>
+            <button id="legal-btn-home" class="navbar-btn">Inprint</button>
+        </footer>
+    </div>
+
+    <!-- Weather App -->
+    <div id="weatherApp" class="hidden">
+        <video autoplay muted loop playsinline id="bg-video"></video>
+
+        <!-- <div class="underconstruction">This site is still under construction. &#x1F3D7;</div> -->
+
+        <div id="loading">Loading weather...</div>
+
+        <h1 class="heading-black" id="location"></h1>
+
+        <div id="wthr-warning-banner" class="hidden">
+            <div id="warning-summary" class="warning-summary"></div>
+        </div>
+
+        <!-- Weather Warning Modal -->
+        <div id="warning-modal" class="warning-modal hidden">
+            <div class="warning-modal-content">
+                <button class="warning-modal-close">&times;</button>
+                <div id="warning-details-container" class="warning-details-container"></div>
+            </div>
+        </div>
+
+        <div id="weather">
+            <h1 id="curr-temp"></h1>
+            <h2 id="feelslike-temp"></h2>
+            <img id="curr-condition"></img>
+            <br>
+            <button id="show-detailed">Details</button>
+            <div id="detailed" class="hidden"></div>
+
+            <h1 class="heading-black" id="forecast-heading">3 Day Forecast</h1>
+
+            <div id="forecast">
+                <div id="day1" class="fc-day"></div>
+                <div id="day2" class="fc-day"></div>
+                <div id="day3" class="fc-day"></div>
+                
+                <div class="hidden" id="detailed-fc-container">
+                    <div id="detailed-fc" class="detailed-fc"></div>
+                </div>
+            </div>
+
+            <h1 class="heading-black">Other Locations</h1>
+
+            <div id="locations">
+                <button class="location-btn" id="curr-location">Your current location</button>
+                <button class="location-btn" id="location-bregenz">Bregenz</button>
+                <button class="location-btn" id="location-innsbruck">Innsbruck</button>
+                <button class="location-btn" id="location-salzburg">Salzburg</button>
+                <button class="location-btn" id="location-linz">Linz</button>
+                <button class="location-btn" id="location-stpölten">St. Pölten</button>
+                <button class="location-btn" id="location-wien">Wien</button>
+                <button class="location-btn" id="location-eisenstadt">Eisenstadt</button>
+                <button class="location-btn" id="location-graz">Graz</button>
+                <button class="location-btn" id="location-klagenfurt">Klagenfurt</button>
+                <button class="location-btn" id="location-lienz">Lienz</button>
+                <button class="location-btn" id="location-andritz">Andritz</button>
+                <button class="location-btn" id="location-kaindorf">Kaindorf an der Sulm</button>
+                <button class="location-btn" id="location-ahbwildon">Allerheiligen bei Wildon</button>
+            </div>
+        </div>
+
+        <footer>
+            <button id="legal-btn-weather" class="navbar-btn">Inprint</button>
+            <a href="https://www.weatherapi.com/" title="Free Weather API" target="_blank"><img src='//cdn.weatherapi.com/v4/images/weatherapi_logo.png' alt="Weather data by WeatherAPI.com"></a>
+            <a href="https://www.geosphere.at/de" title="Weather Warnings"><img src="https://warnungen.zamg.at/wsapp/img/gsa_logo.svg" alt="Weather Warnings by Geospere Austria"></a>
+            <a href="https://opencagedata.com"><img src="https://assets.opencagedata.com/assets/opencage-logo.green-9b2d61130a275515abf13dbe8c5e47a50fb9d4562da92b52f88c7dac85435dd3.svg" alt="Geocoding services provided by Opencage"></a>
+        </footer>
+    </div>
+
+    <!-- Legal -->
+    <div id="legal" class="hidden">
+        <h1 class="heading-black">Impressum</h1>
+        <p>
+            Julian Breitfuß
+        </p>
+        <p>
+            8045 Graz
+        </p>
+        <br>
+        <h4>Kontakt</h4>
+        <p>
+            Telefon: 067763705112<br>
+            E-Mail: <a href="mailto:jdbreitfuss@hotmail.com">jdbreitfuss@hotmail.com</a>
+        </p>
+
+        <br>
+
+        <h4>Dieses Impressum gilt auch für folgende Social-Media-Profile</h4>
+        <p>
+            TikTok: <a href="https://www.tiktok.com/@julianwlan?lang=de-DE" target="_blank">https://www.tiktok.com/@julianwlan?lang=de-DE</a>
+        </p>
+        <br>
+        <h4>Quellenangaben für verwendete Bilder und Grafiken</h4>
+        <p>
+            pixabay &dash; <a href="https://pixabay.com/de/" target="_blank">https://pixabay.com/de/</a>
+        </p>
+    </div>
+
+    <div id="isasspace" class="hidden">
+        <div id="login-form-container">
+            <form id="login-form">
+                <label for="asisa">Login as Isabella</label>
+                <input type="password" name="asisa" id="asisa">
+            </form>
+        </div>
+    </div>
+    
+    <script src="main.js"></script>
 </body>
 </html>
