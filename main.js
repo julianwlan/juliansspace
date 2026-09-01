@@ -492,7 +492,7 @@ restoreLastNavbarPage();
 const clock = document.querySelector('#clock');
 const displayDate = document.querySelector('#date');
 const newDate = new Date();
-displayDate.innerHTML = `${newDate.toLocaleDateString("de-AT",  {
+displayDate.innerHTML = `${newDate.toLocaleDateString("en-UK",  {
     weekday: "long",
     day: "numeric",
     month: "long",
